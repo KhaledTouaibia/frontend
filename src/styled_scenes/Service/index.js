@@ -14,6 +14,7 @@ import BrandFooter from '../../shared_components/BrandFooter';
 import { BadgeIcon } from './icons';
 import TripCart from '../../shared_components/Cards/Trip';
 import Review from '../../shared_components/Review';
+import ReadMoreAndLess from 'react-read-more-less';
 // import Carousel from '../../shared_components/Carousel';
 import ImgSlider from './components/ImgSlider';
 import MapMaker from '../../shared_components/MapMarker';
@@ -145,6 +146,24 @@ class FoodDetailScene extends Component {
     this.checkServiceAvailability = this.checkServiceAvailability.bind(this);
     this.closeServiceUnavailabilityModal = this.closeServiceUnavailabilityModal.bind(this);
   }
+  //Read more-less on description
+  readMoreDescription() {
+    let description;
+    if (typeof this.props.service.description === 'string') {
+      description = (
+        <ReadMoreAndLess
+          ref={this.ReadMore}
+          className="read-more-content"
+          charLimit={1000}
+          readMoreText=" Read more"
+          readLessText=" Read less"
+        >
+          {this.props.service.description}
+        </ReadMoreAndLess>
+      );
+    }
+    return description;
+  }
 
   handleInputChange = event => {
     this.setState({
@@ -179,7 +198,7 @@ class FoodDetailScene extends Component {
                 <h2>{this.props.service.title}</h2>
                 <PreserveWhiteSpace>{this.props.service.subtitle}</PreserveWhiteSpace>
                 <ServiceTags service={this.props.service} />
-                <PreserveWhiteSpace>{this.props.service.description}</PreserveWhiteSpace>
+                <PreserveWhiteSpace>{this.readMoreDescription()}</PreserveWhiteSpace>
                 {((this.props.service.startInstructions &&
                   this.props.service.startInstructions !== 'none') ||
                   (this.props.service.endInstructions &&
